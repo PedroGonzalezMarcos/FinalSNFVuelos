@@ -12,7 +12,7 @@ class CaptainListController extends AbstractController
     public function index(): JsonResponse
     {
         return $this->json([
-            'message' => 'Welcome to your new controller!',
+            'message' => 'Esta es la lista de capitanes:',
             'path' => 'src/Controller/CaptainListController.php',
         ]);
     }
