@@ -53,6 +53,9 @@ class CaptainListController extends AbstractController
     {
         $captain = new Captain();
         $captain->setCaptainLicenseId($request->request->get('captain_license_id'));
+        $captain->setNombre($request->request->get('nombre'));
+        $captain->setDni($request->request->get('dni'));
+
 
         $this->captainRepo->save($captain, true);
 
@@ -90,7 +93,7 @@ class CaptainListController extends AbstractController
     public function delete(int $id): JsonResponse
     {
        $captain = $this->captainRepo->find($id)
-;        if (!$captain) {
+    ;       if (!$captain) {
             return $this->json('No captain found for id ' . $id, 404);
         }
 
@@ -102,27 +105,3 @@ class CaptainListController extends AbstractController
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*#[Route('/captain/list', captain_license_id: 'app_captain_list')]
-    public function index(): JsonResponse
-    {
-        return $this->json([
-            'message' => 'Esta es la lista de capitanes:',
-            'path' => 'src/Controller/CaptainListController.php',
-        ]);
-    }
-}*/

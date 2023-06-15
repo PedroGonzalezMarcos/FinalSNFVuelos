@@ -4,7 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-abstract class Person
+#[ORM\MappedSuperclass]
+class Person
 {
     #[ORM\Column(length: 255)]
     private ?string $nombre = null;

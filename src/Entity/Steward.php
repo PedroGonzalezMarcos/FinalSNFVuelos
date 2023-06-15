@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StewardRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StewardRepository::class)]
@@ -16,9 +18,9 @@ class Steward extends Person
     #[ORM\Column]
     private ?int $air_crew_id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Stewards')]
+    #[ORM\ManyToOne(inversedBy: 'stewards')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Flight $turns = null;
+    private ?Flight $flight = null;
 
     public function getId(): ?int
     {
@@ -37,15 +39,19 @@ class Steward extends Person
         return $this;
     }
 
-    public function getTurns(): ?Flight
+    public function getFlight(): ?Flight
     {
-        return $this->turns;
+        return $this->flight;
     }
 
-    public function setTurns(?Flight $turns): static
+    public function setFlight(?Flight $flight): static
     {
-        $this->turns = $turns;
+        $this->flight = $flight;
 
         return $this;
     }
+    
 }
+
+
+

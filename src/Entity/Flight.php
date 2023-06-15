@@ -24,20 +24,20 @@ class Flight
     #[ORM\Column(length: 255)]
     private ?string $destination = null;
 
-    #[ORM\OneToOne(inversedBy: 'flights', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'flight', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Captain $fligths = null;
+    private ?Captain $captain = null;
 
     #[ORM\ManyToMany(targetEntity: Passenger::class, inversedBy: 'passengers')]
     private Collection $passengers;
 
-    #[ORM\OneToMany(mappedBy: 'turns', targetEntity: Steward::class)]
-    private Collection $Stewards;
+    #[ORM\OneToMany(mappedBy: 'flight', targetEntity: Steward::class)]
+    private Collection $stewards;
 
     public function __construct()
     {
         $this->passengers = new ArrayCollection();
-        $this->Stewards = new ArrayCollection();
+        $this->stewards = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -81,14 +81,14 @@ class Flight
         return $this;
     }
 
-    public function getFligths(): ?Captain
+    public function getCaptain(): ?Captain
     {
-        return $this->fligths;
+        return $this->captain;
     }
 
-    public function setFligths(Captain $fligths): static
+    public function setCaptain(Captain $captain): static
     {
-        $this->fligths = $fligths;
+        $this->captain = $captain;
 
         return $this;
     }
@@ -122,14 +122,14 @@ class Flight
      */
     public function getStewards(): Collection
     {
-        return $this->Stewards;
+        return $this->stewards;
     }
 
     public function addSteward(Steward $steward): static
     {
-        if (!$this->Stewards->contains($steward)) {
-            $this->Stewards->add($steward);
-            $steward->setTurns($this);
+        if (!$this->stewards->contains($steward)) {
+            $this->stewards->add($steward);
+            $steward->setFlight($this);
         }
 
         return $this;
@@ -137,10 +137,10 @@ class Flight
 
     public function removeSteward(Steward $steward): static
     {
-        if ($this->Stewards->removeElement($steward)) {
+        if ($this->stewards->removeElement($steward)) {
             // set the owning side to null (unless already changed)
-            if ($steward->getTurns() === $this) {
-                $steward->setTurns(null);
+            if ($steward->getFlight() === $this) {
+                $steward->setFlight(null);
             }
         }
 

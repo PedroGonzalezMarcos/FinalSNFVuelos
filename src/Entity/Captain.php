@@ -16,8 +16,8 @@ class Captain extends Person
     #[ORM\Column]
     private ?int $captain_license_id = null;
 
-    #[ORM\OneToOne(mappedBy: 'fligths', cascade: ['persist', 'remove'])]
-    private ?Flight $flights = null;
+    #[ORM\OneToOne(mappedBy: 'captain', cascade: ['persist', 'remove'])]
+    private ?Flight $flight = null;
 
     public function getId(): ?int
     {
@@ -36,19 +36,19 @@ class Captain extends Person
         return $this;
     }
 
-    public function getFlights(): ?Flight
+    public function getFlight(): ?Flight
     {
-        return $this->flights;
+        return $this->flight;
     }
 
-    public function setFlights(Flight $flights): static
+    public function setFlight(Flight $flight): static
     {
         // set the owning side of the relation if necessary
-        if ($flights->getFligths() !== $this) {
-            $flights->setFligths($this);
+        if ($flight->getCaptain() !== $this) {
+            $flight->setCaptain($this);
         }
 
-        $this->flights = $flights;
+        $this->flight = $flight;
 
         return $this;
     }
